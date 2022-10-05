@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.androideatit.Model.UserModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +46,7 @@ public class SignInActivity extends AppCompatActivity {
         btnSignIn = (MaterialButton) findViewById(R.id.btnSignIn_activity_sign_in);
 
         btnSignIn.setOnClickListener(view -> {
-//            signIn();
+            signIn();
         });
 
     }
@@ -53,12 +55,36 @@ public class SignInActivity extends AppCompatActivity {
 
     private void signIn(){
 
+        final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
+
+        mDialog.setMessage("Please waiting...");
+        mDialog.show();
+
         table_user.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                /// Get User Information
-                /// Because we will get user phone by get Key , but data we need write Model class to get data
-                //
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                /// Check if user not exits in database
+
+                if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
+
+                    /// Get User Information
+                    /// Because we will get user phone by get Key , but data we need write Model class to get data
+
+                    mDialog.dismiss();
+
+                    UserModel user = dataSnapshot.child(edtPhone.getText().toString()).getValue(UserModel.class);
+
+                    if (user.getPassword().equals(edtPassword.getText().toString())) {
+                        Toast.makeText(SignInActivity.this, "Sing In SUCCESSFULLY !", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(SignInActivity.this, "Sign In FAILED !!!", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else {
+                    mDialog.dismiss();
+                    Toast.makeText(SignInActivity.this, "User not exist in Database", Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

@@ -1,8 +1,16 @@
 <resources>
-    <string name="app_name">AndroidEatIt</string>
+    <string name="app_name">Eat It!!!</string>
+    <string name="lbl_signin_activity_name">Sign In</string>
 
-
+<!--    Main Activity   -->
     <string name="btnSignUp">Sign Up</string>
     <string name="btnSignIn">Sign In</string>
     <string name="txtSlogan">Wherever you are: We will find you and we will feed you.</string>
+
+    <!--    Sign In Activity   -->
+    <string name="hintPhoneNumber">Phone Number</string>
+    <string name="hintName">Name</string>
+    <string name="hintPassword">Password</string>
+
+
 </resources>

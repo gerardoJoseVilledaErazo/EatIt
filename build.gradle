@@ -22,18 +22,23 @@ plugins {
     id 'com.android.library' version '7.2.2' apply false
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
-
 allprojects {
 
     repositories {
+//        jcenter()
+
         // Make sure that you have the following two repositories
 //        google()  // Google's Maven repository
 
 //        mavenCentral()  // Maven Central repository
-//        jcenter()
+
+//        maven {
+//            url "https://maven.google.com" // Google's Maven repository
+//        }
 
     }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
